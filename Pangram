@@ -1,0 +1,38 @@
+class Solution {
+  public boolean checkIfPangram(String sentence) {
+    Set<Character> seen = new HashSet<>();
+    for (int i = 0; i < sentence.length(); i++) {
+      char currChar = Character.toLowerCase(sentence.charAt(i));
+      
+      if (Character.isLetter(currChar)) {
+
+        seen.add(currChar);
+      }
+    }
+
+    return seen.size() == 26;
+  }
+}
+
+
+
+
+class Solution {
+  public boolean checkIfPangram(String sentence) {
+    Set s = new HashSet<>();
+    sentence = sentence.toLowerCase();
+    for(int i=0; i<sentence.length(); i++) {
+      char c = sentence.charAt(i);
+      if(Character.isDigit(c) || Character.isWhitespace(c)) {
+          continue;
+      }
+       if(c >= 'a' && c <= 'z') {
+          s.add(c);
+       }
+    }
+    if(s.size()==26) {
+      return true;
+    }
+    return false;
+  }
+}
