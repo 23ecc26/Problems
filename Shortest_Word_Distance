@@ -1,0 +1,41 @@
+You are given:
+
+An array of strings: wordsDict, e.g. ["practice", "makes", "perfect", "coding", "makes"] 
+Leetcode
++1
+
+Two distinct target words: word1 and word2, both guaranteed to exist somewhere in the array. 
+LeetCode
++1
+
+You need to return the shortest distance between these two words in the array. Distance is defined as the absolute difference between their indices. That is: if word1 occurs at index i, and word2 occurs at index j, the distance is |i − j|. 
+AlgoMonster
++1
+
+Because the same word might occur multiple times, there may be multiple positions of word1 and word2 — you must consider all possible pairs and return the minimum distance across all
+
+
+
+class Solution {
+    public int shortestDistance(String[] wordsDict, String word1, String word2) {
+        int index1 = -1;
+        int index2 = -1;
+        int minDist = wordsDict.length;  // initial large value
+
+        for (int i = 0; i < wordsDict.length; i++) {
+            if (wordsDict[i].equals(word1)) {
+                index1 = i;
+                if (index2 != -1) {
+                    minDist = Math.min(minDist, Math.abs(index1 - index2));
+                }
+            }
+            if (wordsDict[i].equals(word2)) {
+                index2 = i;
+                if (index1 != -1) {
+                    minDist = Math.min(minDist, Math.abs(index1 - index2));
+                }
+            }
+        }
+        return minDist;
+    }
+}
