@@ -1,0 +1,19 @@
+class Solution {
+
+  public int moveElements(int[] arr) {
+    int count= 1; // Initialize the index of the next non-duplicate element
+
+    // Iterate through the array starting from the second element
+    for (int i = 1; i < arr.length; i++) {
+      // Check if the current element is different from the previous non-duplicate element
+      if (arr[count - 1] != arr[i]) {
+        // If different, copy the current element to the nextNonDuplicate position
+        arr[count] = arr[i];
+        // Increment the index of the next non-duplicate element
+        count++;
+      }
+    }
+
+    // Return the length of the modified array (number of non-duplicate elements)
+    return count;
+  }
