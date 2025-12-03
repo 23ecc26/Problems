@@ -1,1 +1,75 @@
-
+public class Main
+{
+    public static class Node {
+        char data;
+        Node next;
+        public static Node head = null;
+        public static void push(char data) {
+            Node newNode = new Node();
+            newNode.data = data;
+            newNode.next = head;
+            head = newNode;
+        }
+        public static char pop() {
+            char val = head.data;
+            Node temp = head;
+            head = head.next;
+            temp.next = null;
+            return val;
+        }
+        public static boolean isEmpty() {
+            return head==null;
+        }
+        public static char peek() {
+            return head.data;
+        }
+    }
+    public static int precedence(char op) {
+        switch (op) {
+            case '+':
+            case '-':
+                return 1;
+            case '*':
+            case '/':
+                return 2;
+            case '^':
+                return 3;
+            default:
+                return 0; 
+        }
+    }
+	public static void main(String[] args) {
+		String infix = "(A+B)*(C+D)";
+		Node stack = new Node();
+		StringBuilder postfix = new StringBuilder();
+		for(int i=0; i<infix.length();i++) {
+		   char c = infix.charAt(i);
+		   if(Character.isLetterOrDigit(c)) {
+		        postfix.append(c);
+		   }
+		   else if(c == '(') {
+		       stack.push(c);
+		   }
+		   else if(c == ')') {
+		       while(!stack.isEmpty() && stack.peek()!='(') {
+		          char ch = stack.pop();
+		          postfix.append(ch);
+		       }
+		       if (!stack.isEmpty() && stack.peek() == '(') {
+                    stack.pop();
+		       }
+		   }
+		   else {
+		      while (!stack.isEmpty() && precedence(c) <= precedence(stack.peek())) {
+		           if (stack.peek() == '(') break; 
+                   postfix.append(stack.pop());
+		       }
+		       stack.push(c);
+		   }
+		}
+		while (!stack.isEmpty()) {
+		    postfix.append(stack.pop());
+		}
+		System.out.println(postfix);
+	}
+}
