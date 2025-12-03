@@ -1,0 +1,55 @@
+import java.util.Scanner;
+class Main {
+    public static class Node {
+        int data;
+        Node lc;
+        Node rc;
+        public static Node root = null;
+        public static Node queue[] = new Node[100];
+        public static int i=-1, j=-1;
+        public static void append(int data) {
+            Node newNode = new Node();
+            newNode.lc = null;
+            newNode.data = data;
+            newNode.rc = null;
+            if(root == null) {
+                root = newNode;
+                queue[++i] = root;
+                j++;
+            }
+            else {
+                while(true) {
+                  Node temp = queue[i];
+                  if(temp.lc == null) {
+                      temp.lc = newNode;
+                      queue[++j] = newNode;
+                      break;
+                  }
+                  if(temp.rc == null) {
+                      temp.rc = newNode;
+                      queue[++j] = newNode;
+                      break;
+                  }
+                  temp = queue[++i];
+                }
+            }
+            
+        }
+        public static void display(Node temp) {
+        while(temp != null) {
+            display(temp.lc);
+            System.out.print(temp.data + " ");
+            display(temp.rc);
+        }
+    }
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int data;
+		do {
+		    data = sc.nextInt();
+		    if(data > 0)
+		         append(data);
+		} while(data > 0);
+		display(root);
+	}
+}
