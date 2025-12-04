@@ -1,0 +1,102 @@
+import java.util.Scanner;
+class Main {
+    public static class Node {
+        int data;
+        Node lc;
+        Node rc;
+    }
+    public static class Queue {
+        Node data;
+        Queue next;
+    }
+        public static Node root = null;
+        public static Node queue[] = new Node[100];
+        public static int i=-1, j=-1;
+        public static Queue head = null;
+        public static Queue tail = null;
+        public static void append(int data) {
+            Node newNode = new Node();
+            newNode.lc = null;
+            newNode.data = data;
+            newNode.rc = null;
+            if(root == null) {
+                root = newNode;
+                queue[++i] = root;
+                j++;
+            }
+            else {
+                while(true) {
+                  Node temp = queue[i];
+                  if(temp.lc == null) {
+                      temp.lc = newNode;
+                      queue[++j] = newNode;
+                      break;
+                  }
+                  if(temp.rc == null) {
+                      temp.rc = newNode;
+                      queue[++j] = newNode;
+                      break;
+                  }
+                  temp = queue[++i];
+                }
+            }
+            
+        }
+        public static void push(Node data) {
+            Queue newNode = new Queue();
+            newNode.data = data;
+            newNode.next = null;
+            
+            if (head == null) {
+                head = tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
+            }
+         }
+        public static Node pop() {
+            if (head == null) {
+               return null;
+            }
+            
+            Queue temp = head;
+            Node val = temp.data;
+            
+            head = head.next;
+            temp.next = null;
+            
+            if (head == null) {
+                tail = null;
+            }
+            return val;
+        }
+        public static boolean isEmpty() {
+            return head==null;
+        }
+        public static void display(Node temp) {
+            if(temp==null) {
+                return;
+            }
+            push(temp);
+            while(!isEmpty()) {
+                Node current = pop();
+                System.out.print(current.data + " ");
+                if(current.lc != null) {
+                    push(current.lc);
+                }
+                if(current.rc != null) {
+                    push(current.rc);
+                }
+            }
+        }
+    	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int data;
+		do {
+		    data = sc.nextInt();
+		    if(data > 0)
+		         append(data);
+		} while(data > 0);
+		display(root);
+	}
+}
