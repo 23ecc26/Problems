@@ -1,0 +1,96 @@
+import java.util.Scanner;
+
+public class Main {
+
+    public static class Node {
+        int data;
+        Node next;
+    }
+
+    public static Node shead = null;
+    public static Node qhead = null;
+    public static Node qtail = null;
+    public static int size = 0;
+
+    public static void qappend(int data) {
+        Node newNode = new Node();
+        newNode.data = data;
+        newNode.next = null;
+
+        if (qhead == null) {
+            qhead = qtail = newNode;
+        } else {
+            qtail.next = newNode;
+            qtail = newNode;
+        }
+        size++;
+    }
+
+    public static int qdelete() {
+        if (qhead == null) {
+            return -1;
+        }
+
+        Node temp = qhead;
+        int val = temp.data;
+        qhead = qhead.next;
+        temp.next = null;
+        size--;
+        return val;
+    }
+
+    public static void sappend(int data) {
+        Node newNode = new Node();
+        newNode.data = data;
+        newNode.next = shead;
+        shead = newNode;
+    }
+
+    public static int sdelete() {
+        if (shead == null) {
+            return -1;
+        }
+
+        Node temp = shead;
+        int val = temp.data;
+        shead = shead.next;
+        temp.next = null;
+        return val;
+    }
+
+    public static void reverse() {
+        int n = size;
+
+        for (int i = 0; i < n; i++) {
+            sappend(qdelete());
+        }
+
+        for (int i = 0; i < n; i++) {
+            qappend(sdelete());
+        }
+    }
+
+    public static void display() {
+        Node temp = qhead;
+        while (temp != null) {
+            System.out.print(temp.data + " ");
+            temp = temp.next;
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int data;
+        while (true) {
+            data = sc.nextInt();
+            if (data <= 0)
+                break;
+            qappend(data);
+        }
+
+        display();
+        reverse();
+        display();
+    }
+}
