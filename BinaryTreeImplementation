@@ -4,6 +4,7 @@ class Main {
         int data;
         Node lc;
         Node rc;
+    }
         public static Node root = null;
         public static Node queue[] = new Node[100];
         public static int i=-1, j=-1;
@@ -36,12 +37,12 @@ class Main {
             
         }
         public static void display(Node temp) {
-        while(temp != null) {
-            display(temp.lc);
-            System.out.print(temp.data + " ");
-            display(temp.rc);
-        }
-    }
+	         if(temp != null) {
+	            display(temp.lc);
+	            System.out.print(temp.data + " ");
+	            display(temp.rc);
+	        }
+       }
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int data;
