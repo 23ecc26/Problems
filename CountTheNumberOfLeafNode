@@ -1,0 +1,59 @@
+import java.util.Scanner;
+class Main {
+    public static class Node {
+        int data;
+        Node lc;
+        Node rc;
+    }
+        public static Node root = null;
+        public static Node queue[] = new Node[100];
+        public static int i=-1, j=-1;
+        public static void append(int data) {
+            Node newNode = new Node();
+            newNode.lc = null;
+            newNode.data = data;
+            newNode.rc = null;
+            if(root == null) {
+                root = newNode;
+                queue[++i] = root;
+                j++;
+            }
+            else {
+                while(true) {
+                  Node temp = queue[i];
+                  if(temp.lc == null) {
+                      temp.lc = newNode;
+                      queue[++j] = newNode;
+                      break;
+                  }
+                  if(temp.rc == null) {
+                      temp.rc = newNode;
+                      queue[++j] = newNode;
+                      break;
+                  }
+                  temp = queue[++i];
+                }
+            }
+            
+        }
+        public static int countNumberOfLeafNode(Node temp) {
+	         if(temp == null) {
+	             return 0;
+	         }
+	         if(temp.lc==null && temp.rc==null) {
+	             return 1;
+	         }
+	         return countNumberOfLeafNode(temp.lc)+countNumberOfLeafNode(temp.rc);
+       }
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int data;
+		do {
+		    data = sc.nextInt();
+		    if(data > 0)
+		         append(data);
+		} while(data > 0);
+		System.out.println("Number of Leaf Node :" + countNumberOfLeafNode(root));
+		
+	}
+}
