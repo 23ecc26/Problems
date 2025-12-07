@@ -1,0 +1,68 @@
+import java.util.Scanner;
+
+public class Main
+{
+    public static class Node {
+        int data;
+        Node next;
+    }
+
+    public static Node head = null;
+    public static Node tail = null;
+    public static int count = 0;
+
+    public static void append(int data, int size) {
+        if (count == size) {
+            System.out.println("INVALID");
+            System.exit(0);
+        }
+
+        Node newNode = new Node();
+        newNode.data = data;
+        newNode.next = null;
+
+        if (head == null) {
+            head = tail = newNode;
+        }
+        else {
+            tail.next = newNode;
+            tail = newNode;
+        }
+        count++;
+    }
+
+    public static void delete() {
+        if (count == 0) {
+            System.out.println("INVALID");
+            System.exit(0);
+        }
+
+        Node temp = head;
+        head = head.next;
+        temp.next = null;
+
+        if (head == null)
+            tail = null;
+
+        count--;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int size = 8;
+        int n = sc.nextInt();
+
+        for (int i = 0; i < n; i++) {
+            String op = sc.next();
+
+            if (op.equals("E")) {
+                append(1, size);
+            }
+            else if (op.equals("D")) {
+                delete();
+            }
+        }
+
+        System.out.println("VALID");
+    }
+}
