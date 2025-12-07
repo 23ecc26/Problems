@@ -1,0 +1,91 @@
+import java.util.Scanner;
+class Main {
+    public static class Node {
+        int data;
+        Node lc;
+        Node rc;
+    }
+        public static Node root = null;
+        public static void append(int data) {
+            Node newNode = new Node();
+            newNode.lc = null;
+            newNode.data = data;
+            newNode.rc = null;
+            if(root == null) {
+                root = newNode;
+               
+            }
+            else {
+                Node temp = root;
+                while(true) {
+                   if(data < temp.data) {
+                      if(temp.lc == null) {
+                        temp.lc = newNode;
+                        break;
+                      }
+                      temp = temp.lc;
+                    }
+                   else {
+                       if(temp.rc == null) {
+                            temp.rc = newNode;
+                            break;
+                        }
+                        temp = temp.rc;
+                    }
+                }
+            }
+            
+        }
+        public static void display(Node temp) {
+        if(temp != null) {
+            display(temp.lc);
+            System.out.print(temp.data + " ");
+            display(temp.rc);
+        }
+    }
+    public static Node delete(Node temp, int data) {
+        if(temp==null) {
+            return temp;
+        }
+        else if(temp.data > data) {
+           temp.lc = delete(temp.lc,data);
+        }
+        else if(temp.data < data) {
+           temp.rc = delete(temp.rc,data);
+        }
+        else {
+            if(temp.lc==null && temp.rc==null) {
+                 return null;
+            }
+            else if(temp.lc == null) {
+                return temp.rc;
+            }
+            else if(temp.rc == null) {
+                return temp.lc;
+            }
+            else {
+                Node place = findMin(temp.rc);
+                temp.data = place.data;
+                temp.rc = delete(temp.rc, place.data); 
+            }
+        }
+         return temp;
+    }
+    public static Node findMin(Node temp) {
+        while(temp.lc != null) {
+            temp = temp.lc;
+        }
+        return temp;
+    }
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int data;
+		do {
+		    data = sc.nextInt();
+		    if(data > 0)
+		         append(data);
+		} while(data > 0);
+		root = delete(root, 50);
+        display(root);
+	}
+}
