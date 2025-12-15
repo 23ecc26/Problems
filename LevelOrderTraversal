@@ -100,3 +100,30 @@ class Main {
 		display(root);
 	}
 }
+
+
+
+Reverse Level Order Traversal
+
+class Tree {
+    public ArrayList<Integer> reverseLevelOrder(Node root) {
+        if(root == null) {
+            return null;
+        }
+         Queue<Node> q = new LinkedList<>();
+        ArrayList<Integer> li = new ArrayList<>();
+        q.add(root);
+        while(!q.isEmpty()) {
+            Node current = q.poll();
+            li.add(current.data);
+            if(current.right != null) {
+                q.add(current.right);
+            }
+             if(current.left != null) {
+                q.add(current.left);
+            }
+        }
+        Collections.reverse(li);
+        return li;
+    }
+}
